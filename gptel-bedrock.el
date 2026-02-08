@@ -63,6 +63,8 @@
   (let ((base-request-data
          (nconc
           `(:messages [,@prompts] :inferenceConfig (:maxTokens ,(or gptel-max-tokens 500)))
+          ;; Include support for prompt caching
+          ;; See https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
           (when gptel--system-message `(:system [(:text ,gptel--system-message)
                                                  ,@ (when (or (eq gptel-cache t) (memq 'system gptel-cache))
                                                       '((:cachePoint (:type "default"))))]))
